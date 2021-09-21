@@ -12,7 +12,10 @@ import ekkoAudio from "./video/ekkoAudio.mp3"
 import useSound from "use-sound";
 import {Howl, Howler} from 'howler';
 import bloop from "./video/bloop.mp3"
-
+import backgroundVideoThree from "./video/vex.mp4"
+import p1V from "./video/vex1.jpg"
+import p2V from "./video/vex2.jpg"
+import p3V from "./video/vex3.jpg"
 
 
 
@@ -26,9 +29,12 @@ function App() {
   const initialIndex = 0;
   const [index, setIndex] = useState(initialIndex);
 
+  const [like, setLike] = useState("like");
+
+  /*
   const initialSound = 0
   const [indexx, setIndexx] = useState(initialSound)
-
+  
   
 
   const sound = new Howl({
@@ -39,7 +45,7 @@ function App() {
   //needs a bugfix, takes over everything
   sound.play();
 
-
+*/
 
   const profile2 = {
     headline:"Garen Champion Spotlight",
@@ -48,7 +54,18 @@ function App() {
     picOne:p1G,
     picTwo:p2G,
     picThree:p3G,
+    like:true,
 
+  }
+
+  const profile3 = {
+    headline:"Vex Champion Spotlight",
+    headline2:"Hover Vex Icons Basterd",
+    vidSource:backgroundVideoThree,
+    picOne:p1V,
+    picTwo:p2V,
+    picThree:p3V,
+    like:true,
   }
 
   const profile1 = {
@@ -58,15 +75,19 @@ function App() {
     picOne:p1,
     picTwo:p2,
     picThree:p3,
+    like:true,
   }
+
+
 
   const database = [
     profile1,
-    profile2
+    profile2,
+    profile3
   ]
   const {headline,headline2,vidSource,picOne,picTwo,picThree} = database[index]
 
-
+/*
 
   const soundUrl = bloop;
 
@@ -84,7 +105,7 @@ function App() {
     play();
   };
 
-
+*/
 
 
 
@@ -120,15 +141,27 @@ function App() {
 
       <img 
       
-       onClick = {()=>{setIndexx(sound)}} 
+       
           class="picThree" 
           style={ {width: "200px", height: "auto"}} 
           src = {picThree}
           ></img>
 
-      <button onClick = {()=>{setIndex(1)}} >IDEKLIKK</button>
+      <button onClick = {()=>{
+        if (index === database.length -1) {
+          setIndex(0)
+        } else {
+          setIndex(index + 1)
+        }}}
+      >IDEKLIKK</button>
+
+      <button onClick={()=>{setLike("unLike")}}>{like}</button>
 
 
+
+      
+      
+      {/*
       <button onClick = {()=>{setIndexx(sound)}} >LEGYENTANC</button>
 
 
@@ -137,7 +170,7 @@ function App() {
         💖
       </span>
     </button>
-
+    */}
     
 
 
