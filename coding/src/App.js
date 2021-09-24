@@ -29,9 +29,12 @@ function App() {
   const initialIndex = 0;
   const [index, setIndex] = useState(initialIndex);
 
-  const [like, setLike] = useState("like");
+  let likeButton = "Like"
 
-  /*
+  const [like, setLike] = useState(likeButton);
+  const [unLike, setUnlike] = useState(likeButton);
+
+  
   const initialSound = 0
   const [indexx, setIndexx] = useState(initialSound)
   
@@ -42,10 +45,10 @@ function App() {
   });
   
 
-  //needs a bugfix, takes over everything
   sound.play();
 
-*/
+
+
 
   const profile2 = {
     headline:"Garen Champion Spotlight",
@@ -87,25 +90,6 @@ function App() {
   ]
   const {headline,headline2,vidSource,picOne,picTwo,picThree} = database[index]
 
-/*
-
-  const soundUrl = bloop;
-
-  const [playbackRate, setPlaybackRate] = React.useState(0.75);
-
-  const [play] = useSound(soundUrl, {
-    playbackRate,
-    volume: 0.5,
-  });
-
-
-  
-  const handleClick = () => {
-    setPlaybackRate(playbackRate + 0.1);
-    play();
-  };
-
-*/
 
 
 
@@ -155,22 +139,23 @@ function App() {
         }}}
       >IDEKLIKK</button>
 
-      <button onClick={()=>{setLike("unLike")}}>{like}</button>
-
-
+      <button onClick={()=>{
+        if ( likeButton === "Like"){
+          setLike("unLike")
+         } 
+         else {
+           setLike(likeButton)
+         }
+       
+         
+         }}>{like}</button>
 
       
       
-      {/*
       <button onClick = {()=>{setIndexx(sound)}} >LEGYENTANC</button>
 
 
-      <button onClick={handleClick}>
-      <span role="img" aria-label="Heart">
-        💖
-      </span>
-    </button>
-    */}
+      
     
 
 
