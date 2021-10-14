@@ -1,34 +1,23 @@
 import "./App.css";
-import React, { useState } from "react";
-import backgroundVideoOne from "./video/ekko.mp4";
-import backgroundVideoTwo from "./video/garen.mp4";
-import p1 from "./video/Ekko_0.jpg";
-import p2 from "./video/Ekko_1.jpg";
-import p3 from "./video/Ekko_2.jpg";
-import p1G from "./video/Garen_0.jpg";
-import p2G from "./video/Garen_1.jpg";
-import p3G from "./video/Garen_2.jpg";
-import ekkoAudio from "./video/ekkoAudio.mp3";
-import useSound from "use-sound";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Howl, Howler } from "howler";
-import bloop from "./video/bloop.mp3";
-import backgroundVideoThree from "./video/vex.mp4";
-import p1V from "./video/vex1.jpg";
-import p2V from "./video/vex2.jpg";
-import p3V from "./video/vex3.jpg";
 
 function App() {
-  Howler.volume(0.5);
+  const [database, setDatabase] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get("http://localhost:4000");
+      setDatabase(result.data);
+    };
+    fetchData();
+  }, []);
 
-  const initialIndex = 0;
-  const [index, setIndex] = useState(initialIndex);
+  const initialNumber = 0;
+  const [number, setNumber] = useState(initialNumber);
+  // Howler.volume(0.5);
 
-  let likeButton = "Like";
-
-  const [like, setLike] = useState(likeButton);
-  const [unLike, setUnlike] = useState(likeButton);
-
-  const initialSound = 0;
+  /* const initialSound = 0;
   const [indexx, setIndexx] = useState(initialSound);
 
   const sound = new Howl({
@@ -37,39 +26,24 @@ function App() {
 
   sound.play();
 
-  const profile2 = {
-    headline: "Garen Champion Spotlight",
-    headline2: "Hover GAREN SPINNING Basterd",
-    vidSource: backgroundVideoTwo,
-    picOne: p1G,
-    picTwo: p2G,
-    picThree: p3G,
-    like: true,
-  };
+*/
 
-  const profile3 = {
-    headline: "Vex Champion Spotlight",
-    headline2: "Hover Vex Icons Basterd",
-    vidSource: backgroundVideoThree,
-    picOne: p1V,
-    picTwo: p2V,
-    picThree: p3V,
-    like: true,
-  };
+  if (!database) {
+    return <p>varjabazdmeg</p>;
+  }
 
-  const profile1 = {
-    headline: "Ekko Champion Spotlight",
-    headline2: "Hover Dose Icons Basterd",
-    vidSource: backgroundVideoOne,
-    picOne: p1,
-    picTwo: p2,
-    picThree: p3,
-    like: true,
-  };
+  console.log(database[2].name, "idemoooooooooo");
 
-  const database = [profile1, profile2, profile3];
-  const { headline, headline2, vidSource, picOne, picTwo, picThree } =
-    database[index];
+  const {
+    name,
+    headline,
+    headline2,
+    vidSource,
+    picOne,
+    picTwo,
+    picThree,
+    like,
+  } = database[number];
 
   return (
     <div className="App">
@@ -113,34 +87,35 @@ function App() {
 
       <button
         onClick={() => {
-          if (index === database.length - 1) {
-            setIndex(0);
-          } else {
-            setIndex(index + 1);
-          }
+          if (0 !== number) setNumber(number - 1);
         }}
       >
-        IDEKLIKK
+        Previous
       </button>
 
       <button
         onClick={() => {
-          if (likeButton === "Like") {
-            setLike("unLike");
-          } else {
-            setLike(likeButton);
+          if (database.length - 1 !== number) {
+            setNumber(number + 1);
           }
         }}
       >
-        {like}
+        Next
       </button>
 
       <button
         onClick={() => {
-          setIndexx(sound);
+          setDatabase(
+            database.map((profile) => {
+              if (profile.name === name) {
+                profile.like = !like;
+              }
+              return profile;
+            })
+          );
         }}
       >
-        LEGYENTANC
+        {like ? "UnLike" : "Like"}
       </button>
     </div>
   );
