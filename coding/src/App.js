@@ -1,11 +1,12 @@
 import "./App.css";
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Howl, Howler } from "howler";
+import database from "./basicsources/database.js"
+
 
 function App() {
-  const [database, setDatabase] = useState();
-  useEffect(() => {
+  
+
+  /* useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get("http://localhost:4000");
       setDatabase(result.data);
@@ -13,24 +14,20 @@ function App() {
     fetchData();
   }, []);
 
-  const initialNumber = 0;
-  const [number, setNumber] = useState(initialNumber);
-  // Howler.volume(0.5);
 
-  /* const initialSound = 0;
-  const [indexx, setIndexx] = useState(initialSound);
 
-  const sound = new Howl({
-    src: [ekkoAudio],
-  });
-
-  sound.play();
-
-*/
 
   if (!database) {
     return <p>varjabazdmeg</p>;
   }
+
+  */
+
+
+
+
+const database = [profile1, profile2, profile3];
+ 
 
   const {
     name,
@@ -42,6 +39,12 @@ function App() {
     picThree,
     like,
   } = database[number];
+
+  const [database, setDatabase] = useState();
+
+
+  const initialNumber = 0;
+  const [number, setNumber] = useState(initialNumber);
 
   return (
     <div className="App">
@@ -61,7 +64,7 @@ function App() {
         }}
       >
         <source
-          src="https://drive.google.com/file/d/1IZEB9CXYRGLZE9gWZL8U-c3YnCKqvPB0/view"
+          src={vidSource}
           type="video/mp4"
         />
       </video>
