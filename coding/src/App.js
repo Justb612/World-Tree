@@ -32,8 +32,6 @@ function App() {
     return <p>varjabazdmeg</p>;
   }
 
-  console.log(database[2].name, "idemoooooooooo");
-
   const {
     name,
     headline,
@@ -62,7 +60,10 @@ function App() {
           zIndex: "-1",
         }}
       >
-        <source src={vidSource} type="video/mp4" />
+        <source
+          src="https://drive.google.com/file/d/1IZEB9CXYRGLZE9gWZL8U-c3YnCKqvPB0/view"
+          type="video/mp4"
+        />
       </video>
 
       <h1 style={{ color: "white" }}>{headline}</h1>
