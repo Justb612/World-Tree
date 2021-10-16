@@ -24,14 +24,18 @@ function App() {
   */
 
 
-  const [database, setDatabase] = useState(initialDatabase);
+
+  const [database, setDatabase] = useState(initialDatabase.database);
 
 
   const initialNumber = 0;
   const [number, setNumber] = useState(initialNumber);
 
 
-  const [
+
+
+
+  const {
     name,
     headline,
     headline2,
@@ -40,9 +44,8 @@ function App() {
     picTwo,
     picThree,
     like,
-   ] = database[number];
+   } = database[number];
 
-   console.log(database, " DATABASEEEEE")
 
 
 
