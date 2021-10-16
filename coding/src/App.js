@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import database from "./basicsources/database.js"
+import initialDatabase from "./basicsources/database.js"
 
 
 function App() {
@@ -24,12 +24,14 @@ function App() {
   */
 
 
+  const [database, setDatabase] = useState(initialDatabase);
 
 
-const database = [profile1, profile2, profile3];
- 
+  const initialNumber = 0;
+  const [number, setNumber] = useState(initialNumber);
 
-  const {
+
+  const [
     name,
     headline,
     headline2,
@@ -38,13 +40,11 @@ const database = [profile1, profile2, profile3];
     picTwo,
     picThree,
     like,
-  } = database[number];
+   ] = database[number];
 
-  const [database, setDatabase] = useState();
+   console.log(database, " DATABASEEEEE")
 
 
-  const initialNumber = 0;
-  const [number, setNumber] = useState(initialNumber);
 
   return (
     <div className="App">
