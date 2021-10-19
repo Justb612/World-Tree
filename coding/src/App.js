@@ -1,39 +1,30 @@
 import "./App.css";
+import Home from "./components/Home.js";
+import About from "./components/About.js";
+import axios from "axios";
+import Users from "./components/Users.js";
+import SpinningIcons from "./components/Champions/SpinningIcons/SpinningIcons";
+import ChampionButton from "./components/Champions/ChampionButton/ChampionButton";
+import ChampionVideo from "./components/Champions/ChampionVideo/ChampionVideo.js";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import initialDatabase from "./basicsources/database.js"
-
 
 function App() {
-  
+  const [database, setDatabase] = useState();
+  const initialNumber = 0;
+  const [number, setNumber] = useState(initialNumber);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get("http://localhost:4000");
+      const result = await axios.get("http://localhost:5000");
       setDatabase(result.data);
     };
     fetchData();
   }, []);
 
-
-
-
   if (!database) {
     return <p>varjabazdmeg</p>;
   }
-
-  */
-
-
-
-  const [database, setDatabase] = useState(initialDatabase.database);
-
-
-  const initialNumber = 0;
-  const [number, setNumber] = useState(initialNumber);
-
-
-
-
 
   const {
     name,
@@ -44,87 +35,75 @@ function App() {
     picTwo,
     picThree,
     like,
-   } = database[number];
+  } = database[number];
 
+  const previousButton = () => {
+    if (0 !== number) setNumber(number - 1);
+  };
+  const nextButton = () => {
+    if (database.length - 1 !== number) {
+      setNumber(number + 1);
+    }
+  };
 
-
+  const likeButton = () => {
+    setDatabase(
+      database.map((profile) => {
+        if (profile.name === name) {
+          profile.like = !like;
+        }
+        return profile;
+      })
+    );
+  };
 
   return (
-    <div className="App">
-      <video
-        autoPlay
-        loop
-        muted
-        style={{
-          position: "absolute",
-          width: "100%",
-          left: "50%",
-          top: "50%",
-          height: "100%",
-          objectFit: "cover",
-          transform: "translate(-50%, -50%)",
-          zIndex: "-1",
-        }}
-      >
-        <source
-          src={vidSource}
-          type="video/mp4"
-        />
-      </video>
+    <Router>
+      <div className="App">
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+          </ul>
+        </nav>
 
-      <h1 style={{ color: "white" }}>{headline}</h1>
-      <h2 style={{ color: "white" }}>{headline2}</h2>
-      <img
-        class="picOne"
-        style={{ width: "200px", height: "auto" }}
-        src={picOne}
-      ></img>
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/users">
+            <Users />
+            <ChampionVideo videoLink={vidSource} />
 
-      <img
-        class="picTwo"
-        style={{ width: "200px", height: "auto" }}
-        src={picTwo}
-      ></img>
+            <h1 style={{ color: "white" }}>{headline}</h1>
+            <h2 style={{ color: "white" }}>{headline2}</h2>
 
-      <img
-        class="picThree"
-        style={{ width: "200px", height: "auto" }}
-        src={picThree}
-      ></img>
+            <SpinningIcons image={picOne} imageClass={"picOne"} />
+            <SpinningIcons image={picTwo} imageClass={"picTwo"} />
+            <SpinningIcons image={picThree} imageClass={"picThree"} />
 
-      <button
-        onClick={() => {
-          if (0 !== number) setNumber(number - 1);
-        }}
-      >
-        Previous
-      </button>
-
-      <button
-        onClick={() => {
-          if (database.length - 1 !== number) {
-            setNumber(number + 1);
-          }
-        }}
-      >
-        Next
-      </button>
-
-      <button
-        onClick={() => {
-          setDatabase(
-            database.map((profile) => {
-              if (profile.name === name) {
-                profile.like = !like;
-              }
-              return profile;
-            })
-          );
-        }}
-      >
-        {like ? "UnLike" : "Like"}
-      </button>
-    </div>
+            <ChampionButton buttonOnclick={previousButton} name={"Previous"} />
+            <ChampionButton buttonOnclick={nextButton} name={"Next"} />
+            <ChampionButton
+              buttonOnclick={likeButton}
+              name={like ? "Unlike" : "Like"}
+            />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
