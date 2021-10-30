@@ -1,4 +1,6 @@
 import React from "react";
+import LikeButton from "./components/Champions/ChampionButton/LikeButton";
+import NavButtons from "./components/Champions/ChampionButton/NavButton";
 import SpinningIcons from "./components/Champions/SpinningIcons/SpinningIcons";
 import ChampionVideo from "./components/Champions/ChampionVideo/ChampionVideo.js";
 import { useState, useEffect } from "react";
@@ -21,6 +23,8 @@ export default function Users() {
     return <p>varjabazdmeg</p>;
   }
 
+  console.log(database);
+
   const {
     name,
     headline,
@@ -32,47 +36,6 @@ export default function Users() {
     like,
   } = database[number];
 
-  const NavButtons = (args) => {
-    return (
-      <div>
-        {" "}
-        <button
-          onClick={() => {
-            if (0 !== number) setNumber(number - 1);
-          }}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => {
-            if (database.length - 1 !== number) setNumber(number + 1);
-          }}
-        >
-          Next
-        </button>
-      </div>
-    );
-  };
-
-  const LikeButton = () => {
-    return (
-      <button
-        onClick={() => {
-          setDatabase(
-            database.map((profile) => {
-              if (profile.name === name) {
-                profile.like = !like;
-              }
-              return profile;
-            })
-          );
-        }}
-      >
-        {like ? "Unlike" : "Like"}
-      </button>
-    );
-  };
-
   return (
     <div>
       <ChampionVideo videoLink={vidSource} />
@@ -81,8 +44,13 @@ export default function Users() {
       <SpinningIcons image={picOne} imageClass={"picOne"} />
       <SpinningIcons image={picTwo} imageClass={"picTwo"} />
       <SpinningIcons image={picThree} imageClass={"picThree"} />
-      <NavButtons />
-      <LikeButton />
+      <NavButtons number={number} setNumber={setNumber} database={database} />
+      <LikeButton
+        name={name}
+        setDatabase={setDatabase}
+        database={database}
+        like={like}
+      />
     </div>
   );
 }

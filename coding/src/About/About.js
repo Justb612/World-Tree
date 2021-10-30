@@ -1,36 +1,33 @@
 import "./About.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tasks from "./Components/Tasks";
 import AddTask from "./Components/AddTask";
 import Header from "./Components/Header";
+import axios from "axios";
 
 function About() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: "ColdStress",
-      day: "MyDay",
-      reminder: true,
-    },
-    {
-      id: 2,
-      text: "Exercise",
-      day: "Equilibrium",
-      reminder: true,
-    },
-    {
-      id: 3,
-      text: "Sauna",
-      day: "Sunshine",
-      reminder: true,
-    },
-    {
-      id: 4,
-      text: "Mindfulness Practice",
-      day: "Moonlight",
-      reminder: true,
-    },
-  ]);
+  const [showAddTask, setShowAddTask] = useState(false);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get("http://localhost:5000/aboutdata");
+      setTasks(result.data);
+    };
+    fetchData();
+  }, []);
+
+  if (!tasks) {
+    return <p>You Shall Not Pass !!!</p>;
+  }
+
+  //ADD TASK
+
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 10000) + 1;
+    const newTask = { id, ...task };
+    setTasks([...tasks, newTask]);
+  };
 
   //DETELE TASK
 
@@ -51,8 +48,11 @@ function About() {
 
   return (
     <div className="container">
-      <Header />
-      <AddTask />
+      <Header
+        onAdd={() => setShowAddTask(!showAddTask)}
+        showAdd={showAddTask}
+      />
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (

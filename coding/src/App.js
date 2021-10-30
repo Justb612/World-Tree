@@ -1,5 +1,6 @@
 import "./App.css";
 import React from "react";
+import Champions from "./Champions/Champions";
 import Home from "./Users/components/Home.js";
 import About from "./About/About.js";
 import Users from "./Users/Users.js";
@@ -20,17 +21,21 @@ function App() {
             <li>
               <Link to="/users">Users</Link>
             </li>
+            <li>
+              <Link to="/champions">Champions</Link>
+            </li>
           </ul>
         </nav>
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/about">
             <About />
           </Route>
           <Route path="/users">
             <Users />
+          </Route>
+          <Route path="/champions">
+            <Champions />
           </Route>
           <Route path="/">
             <Home />
